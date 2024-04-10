@@ -14,7 +14,6 @@ import { HttpClient } from '@angular/common/http';
 import { lastValueFrom } from 'rxjs';
 import { extractFragment } from './wrapper-helper';
 import { isPlatformServer, isPlatformBrowser } from '@angular/common';
-import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-wrapper',
@@ -27,7 +26,12 @@ export class WrapperComponent implements OnInit {
   elm = inject(ElementRef);
   http = inject(HttpClient);
   platformId = inject(PLATFORM_ID);
-  sani = inject(DomSanitizer);
+
+  allowed = [
+    'http://localhost:4201/',
+    'http://localhost:4202/',
+    'http://localhost:4203/'
+  ];
 
   @Input() config = initWrapperConfig;
 
@@ -51,6 +55,12 @@ export class WrapperComponent implements OnInit {
 
   async loadFragment() {
     const { fragmentUrl, elementName, remoteName } = this.config;
+    const ok = this.allowed.some((url) => fragmentUrl.startsWith(url));
+
+    if (!ok) {
+      throw new Error(`${fragmentUrl} not allowed!`);
+    }
+
     const result = await lastValueFrom(
       this.http.get(fragmentUrl, { responseType: 'text' })
     );

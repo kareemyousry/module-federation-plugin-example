@@ -15,6 +15,6 @@ export class IslandDemoComponent {
     remoteName: 'mfe2',
     exposedModule: './web-components',
     elementName: 'mfe2-root',
-    fragmentUrl: 'http://localhost:4202'
+    fragmentUrl: 'http://localhost:4202/'
   };
 }
