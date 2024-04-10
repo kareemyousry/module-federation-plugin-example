@@ -3,7 +3,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { authInfo } from '@demo/auth';
 
 @Component({
-  selector: 'mfe2-root',
+  selector: 'app-root',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './app.component.html',

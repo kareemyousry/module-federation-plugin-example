@@ -12,7 +12,6 @@
     "server.ts"
   ],
   "include": [
-    "src/**/*.d.ts",
-    "..\\auth\\src\\public-api.ts"
+    "src/**/*.d.ts"
   ]
 }
