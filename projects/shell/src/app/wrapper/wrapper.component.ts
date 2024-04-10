@@ -40,21 +40,6 @@ export class WrapperComponent implements OnInit {
     }
   }
 
-  private initIntersectionObserver() {
-    const options: IntersectionObserverInit = {
-      root: null,
-      threshold: 0.75,
-    };
-
-    const io = new IntersectionObserver((e) => {
-      if (e[0].isIntersecting && this.showPlaceholder) {
-        this.loadComponent();
-      }
-    }, options);
-
-    io.observe(this.elm.nativeElement.querySelector('#placeholder'));
-  }
-
   async loadComponent() {
     const { exposedModule, remoteName, elementName } = this.config;
     await loadRemoteModule(remoteName, exposedModule);
@@ -67,7 +52,7 @@ export class WrapperComponent implements OnInit {
   }
 
   async loadFragment() {
-    const { fragmentUrl, elementName, remoteName } = this.config;
+    const { fragmentUrl, elementName, remoteName, serverSideElementName } = this.config;
     const result = await lastValueFrom(
       this.http.get(fragmentUrl, { responseType: 'text' })
     );
