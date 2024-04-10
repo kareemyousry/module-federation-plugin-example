@@ -12,17 +12,25 @@
 			"architect": {
 				"build": {
 					"builder": "@angular-architects/native-federation:build",
-					"options": {
-						"target": "shell:esbuild:production",
-						"polyfills": []
-					}
+					"options": {},
+					"configurations": {
+						"production": {
+							"target": "shell:esbuild:production"
+						},
+						"development": {
+							"target": "shell:esbuild:development",
+							"dev": true
+						}
+					},
+					"defaultConfiguration": "production"
 				},
 				"serve": {
 					"builder": "@angular-architects/native-federation:build",
 					"options": {
 						"target": "shell:serve-original:development",
 						"rebuildDelay": 0,
-						"dev": true
+						"dev": true,
+						"port": 0
 					}
 				},
 				"extract-i18n": {
@@ -67,7 +75,12 @@
 							"projects/shell/src/styles.css"
 						],
 						"scripts": [],
-						"browser": "projects/shell/src/main.ts"
+						"browser": "projects/shell/src/main.ts",
+						"server": "projects/shell/src/main.server.ts",
+						"prerender": true,
+						"ssr": {
+							"entry": "projects/shell/server.ts"
+						}
 					},
 					"configurations": {
 						"production": {
@@ -104,7 +117,10 @@
 							"buildTarget": "shell:esbuild:development"
 						}
 					},
-					"defaultConfiguration": "development"
+					"defaultConfiguration": "development",
+					"options": {
+						"port": 4200
+					}
 				}
 			}
 		},
@@ -223,17 +239,25 @@
 			"architect": {
 				"build": {
 					"builder": "@angular-architects/native-federation:build",
-					"options": {
-						"target": "mfe2:esbuild:production",
-						"polyfills": []
-					}
+					"options": {},
+					"configurations": {
+						"production": {
+							"target": "mfe2:esbuild:production"
+						},
+						"development": {
+							"target": "mfe2:esbuild:development",
+							"dev": true
+						}
+					},
+					"defaultConfiguration": "production"
 				},
 				"serve": {
 					"builder": "@angular-architects/native-federation:build",
 					"options": {
 						"target": "mfe2:serve-original:development",
 						"rebuildDelay": 0,
-						"dev": true
+						"dev": true,
+						"port": 0
 					}
 				},
 				"extract-i18n": {
@@ -278,7 +302,12 @@
 							"projects/mfe2/src/styles.css"
 						],
 						"scripts": [],
-						"browser": "projects/mfe2/src/main.ts"
+						"browser": "projects/mfe2/src/main.ts",
+						"server": "projects/mfe2/src/main.server.ts",
+						"prerender": true,
+						"ssr": {
+							"entry": "projects/mfe2/server.ts"
+						}
 					},
 					"configurations": {
 						"production": {
@@ -316,7 +345,10 @@
 							"port": 4202
 						}
 					},
-					"defaultConfiguration": "development"
+					"defaultConfiguration": "development",
+					"options": {
+						"port": 4202
+					}
 				}
 			}
 		},
@@ -329,17 +361,25 @@
 			"architect": {
 				"build": {
 					"builder": "@angular-architects/native-federation:build",
-					"options": {
-						"target": "mfe3:esbuild:production",
-						"polyfills": []
-					}
+					"options": {},
+					"configurations": {
+						"production": {
+							"target": "mfe3:esbuild:production"
+						},
+						"development": {
+							"target": "mfe3:esbuild:development",
+							"dev": true
+						}
+					},
+					"defaultConfiguration": "production"
 				},
 				"serve": {
 					"builder": "@angular-architects/native-federation:build",
 					"options": {
 						"target": "mfe3:serve-original:development",
 						"rebuildDelay": 0,
-						"dev": true
+						"dev": true,
+						"port": 0
 					}
 				},
 				"extract-i18n": {
@@ -384,7 +424,12 @@
 							"projects/mfe3/src/styles.css"
 						],
 						"scripts": [],
-						"browser": "projects/mfe3/src/main.ts"
+						"browser": "projects/mfe3/src/main.ts",
+						"server": "projects/mfe3/src/main.server.ts",
+						"prerender": true,
+						"ssr": {
+							"entry": "projects/mfe3/server.ts"
+						}
 					},
 					"configurations": {
 						"production": {
@@ -422,7 +467,10 @@
 							"port": 4203
 						}
 					},
-					"defaultConfiguration": "development"
+					"defaultConfiguration": "development",
+					"options": {
+						"port": 4203
+					}
 				}
 			}
 		},

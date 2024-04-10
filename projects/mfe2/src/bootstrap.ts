@@ -1,13 +1,15 @@
 import { createCustomElement } from '@angular/elements';
-import { createApplication } from '@angular/platform-browser';
+import { bootstrapApplication, createApplication, provideClientHydration } from '@angular/platform-browser';
 import { AppComponent } from './app/app.component';
-import { NgZone } from '@angular/core';
+import { NgZone, booleanAttribute } from '@angular/core';
 
 (async () => {
+
   const app = await createApplication({
     providers: [
       /* your global providers here */
       globalThis.ngZone ? { provide: NgZone, useValue: globalThis.ngZone } : [],
+      provideClientHydration()
     ],
   });
 

@@ -1,5 +1,5 @@
 import { createCustomElement } from '@angular/elements';
-import { createApplication } from '@angular/platform-browser';
+import { bootstrapApplication, createApplication, provideClientHydration } from '@angular/platform-browser';
 import { AppComponent } from './app/app.component';
 import { NgZone } from '@angular/core';
 import { provideRouter } from '@angular/router';
@@ -10,6 +10,7 @@ import { APP_ROUTES } from './app/app.routes';
     providers: [
       globalThis.ngZone ? { provide: NgZone, useValue: globalThis.ngZone } : [],
       provideRouter(APP_ROUTES),
+      provideClientHydration()
     ],
   });
 
