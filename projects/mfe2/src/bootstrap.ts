@@ -1,7 +1,8 @@
 import { createCustomElement } from '@angular/elements';
-import { bootstrapApplication, createApplication, provideClientHydration } from '@angular/platform-browser';
+import { createApplication, provideClientHydration } from '@angular/platform-browser';
 import { AppComponent } from './app/app.component';
 import { NgZone, booleanAttribute } from '@angular/core';
+import { appConfig } from './app/app.config';
 
 (async () => {
 
@@ -9,7 +10,7 @@ import { NgZone, booleanAttribute } from '@angular/core';
     providers: [
       /* your global providers here */
       globalThis.ngZone ? { provide: NgZone, useValue: globalThis.ngZone } : [],
-      provideClientHydration()
+      ...appConfig.providers
     ],
   });
 
