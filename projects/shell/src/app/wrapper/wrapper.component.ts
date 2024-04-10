@@ -4,6 +4,7 @@ import {
   Input,
   OnInit,
   PLATFORM_ID,
+  SecurityContext,
   inject,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -13,6 +14,7 @@ import { HttpClient } from '@angular/common/http';
 import { lastValueFrom } from 'rxjs';
 import { extractFragment } from './wrapper-helper';
 import { isPlatformServer, isPlatformBrowser } from '@angular/common';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-wrapper',
@@ -20,23 +22,20 @@ import { isPlatformServer, isPlatformBrowser } from '@angular/common';
   imports: [CommonModule],
   templateUrl: './wrapper.component.html',
   styleUrls: ['./wrapper.component.css'],
-  // host: { ngSkipHydration: 'true' },
 })
 export class WrapperComponent implements OnInit {
   elm = inject(ElementRef);
   http = inject(HttpClient);
   platformId = inject(PLATFORM_ID);
+  sani = inject(DomSanitizer);
 
   @Input() config = initWrapperConfig;
 
-  showPlaceholder = true;
-
   ngOnInit() {
     if (isPlatformServer(this.platformId) && this.config.fragmentUrl) {
-       this.loadFragment();
+      this.loadFragment();
     } else if (isPlatformBrowser(this.platformId)) {
       this.loadComponent();
-      // this.initIntersectionObserver();
     }
   }
 
@@ -48,16 +47,15 @@ export class WrapperComponent implements OnInit {
       const root = document.createElement(elementName);
       this.elm.nativeElement.appendChild(root);
     }
-    this.showPlaceholder = false;
   }
 
   async loadFragment() {
-    const { fragmentUrl, elementName, remoteName, serverSideElementName } = this.config;
+    const { fragmentUrl, elementName, remoteName } = this.config;
     const result = await lastValueFrom(
       this.http.get(fragmentUrl, { responseType: 'text' })
     );
 
-    const rawHtml = extractFragment(result, elementName);
+    const html = extractFragment(result, elementName);
     const style = extractFragment(result, 'style', 'ng-app-id', remoteName);
     const script = extractFragment(
       result,
@@ -66,9 +64,6 @@ export class WrapperComponent implements OnInit {
       `${remoteName}-state`
     );
 
-    const html = rawHtml;
-
-    // Take care of XSS !!!
     this.elm.nativeElement.querySelector('#placeholder').innerHTML = `${style}\n${script}\n${html}`;
   }
 }
