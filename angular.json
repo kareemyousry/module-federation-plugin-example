@@ -59,19 +59,19 @@
 				"serve": {
 					"builder": "@angular-devkit/build-angular:dev-server",
 					"configurations": {
-						"production": {
-							"browserTarget": "shell:build:production"
+            "production": {
+              "buildTarget": "shell:build:production"
 						},
-						"development": {
-							"browserTarget": "shell:build:development"
+            "development": {
+              "buildTarget": "shell:build:development"
 						}
 					},
 					"defaultConfiguration": "development"
 				},
 				"extract-i18n": {
 					"builder": "@angular-devkit/build-angular:extract-i18n",
-					"options": {
-						"browserTarget": "shell:build"
+          "options": {
+            "buildTarget": "shell:build"
 					}
 				},
 				"test": {
@@ -150,19 +150,19 @@
 				"serve": {
 					"builder": "@angular-devkit/build-angular:dev-server",
 					"configurations": {
-						"production": {
-							"browserTarget": "mfe1:build:production"
+            "production": {
+              "buildTarget": "mfe1:build:production"
 						},
-						"development": {
-							"browserTarget": "mfe1:build:development"
+            "development": {
+              "buildTarget": "mfe1:build:development"
 						}
 					},
 					"defaultConfiguration": "development"
 				},
 				"extract-i18n": {
 					"builder": "@angular-devkit/build-angular:extract-i18n",
-					"options": {
-						"browserTarget": "mfe1:build"
+          "options": {
+            "buildTarget": "mfe1:build"
 					}
 				},
 				"test": {
