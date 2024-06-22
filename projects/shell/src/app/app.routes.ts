@@ -4,7 +4,7 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { ProgrammaticLoadingComponent } from './programmatic-loading/programmatic-loading.component';
-import { loadRemoteModule } from '@angular-architects/module-federation';
+import { loadRemoteModule } from '@angular-architects/native-federation';
 
 export const APP_ROUTES: Routes = [
     {
@@ -15,11 +15,7 @@ export const APP_ROUTES: Routes = [
     {
       path: 'booking',
       loadChildren: () => 
-        loadRemoteModule({
-          type: 'module',
-          remoteEntry: 'http://localhost:4201/remoteEntry.js',
-          exposedModule: './routes'
-        })
+        loadRemoteModule('mfe1', './routes')
         .then(m => m.MFE1_ROUTES)
 
         //import('mfe1/routes').then(m => m.MFE1_ROUTES)
@@ -27,11 +23,7 @@ export const APP_ROUTES: Routes = [
     {
       path: 'my-tickets',
       loadComponent: () => 
-        loadRemoteModule({
-          type: 'module',
-          remoteEntry: 'http://localhost:4201/remoteEntry.js',
-          exposedModule: './Component'
-        })
+        loadRemoteModule('mfe1', './Component')
         .then(m => m.MyTicketsComponent)
     },
     {

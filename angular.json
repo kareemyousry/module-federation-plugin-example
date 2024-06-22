@@ -15,74 +15,26 @@
 			"prefix": "app",
 			"architect": {
 				"build": {
-					"builder": "ngx-build-plus:browser",
-					"options": {
-						"outputPath": "dist/shell",
-						"index": "projects/shell/src/index.html",
-						"main": "projects/shell/src/main.ts",
-						"polyfills": "projects/shell/src/polyfills.ts",
-						"tsConfig": "projects/shell/tsconfig.app.json",
-						"assets": [
-							"projects/shell/src/favicon.ico",
-							"projects/shell/src/assets"
-						],
-						"styles": [
-							"projects/shell/src/styles.css"
-						],
-						"scripts": [],
-						"extraWebpackConfig": "projects/shell/webpack.config.js",
-						"commonChunk": false
-					},
+					"builder": "@angular-architects/native-federation:build",
+					"options": {},
 					"configurations": {
 						"production": {
-							"budgets": [
-								{
-									"type": "initial",
-									"maximumWarning": "500kb",
-									"maximumError": "1mb"
-								},
-								{
-									"type": "anyComponentStyle",
-									"maximumWarning": "2kb",
-									"maximumError": "4kb"
-								}
-							],
-							"fileReplacements": [
-								{
-									"replace": "projects/shell/src/environments/environment.ts",
-									"with": "projects/shell/src/environments/environment.prod.ts"
-								}
-							],
-							"outputHashing": "all",
-							"extraWebpackConfig": "projects/shell/webpack.prod.config.js"
+							"target": "shell:esbuild:production"
 						},
 						"development": {
-							"buildOptimizer": false,
-							"optimization": false,
-							"vendorChunk": true,
-							"extractLicenses": false,
-							"sourceMap": true,
-							"namedChunks": true
+							"target": "shell:esbuild:development",
+							"dev": true
 						}
 					},
 					"defaultConfiguration": "production"
 				},
 				"serve": {
-					"builder": "ngx-build-plus:dev-server",
-					"configurations": {
-						"production": {
-							"browserTarget": "shell:build:production",
-							"extraWebpackConfig": "projects/shell/webpack.prod.config.js"
-						},
-						"development": {
-							"browserTarget": "shell:build:development"
-						}
-					},
-					"defaultConfiguration": "development",
+					"builder": "@angular-architects/native-federation:build",
 					"options": {
-						"publicHost": "http://localhost:4200",
-						"port": 4200,
-						"extraWebpackConfig": "projects/shell/webpack.config.js"
+						"target": "shell:serve-original:development",
+						"rebuildDelay": 0,
+						"dev": true,
+						"port": 0
 					}
 				},
 				"extract-i18n": {
@@ -107,6 +59,73 @@
 							"projects/shell/src/styles.css"
 						],
 						"scripts": []
+					}
+				},
+				"esbuild": {
+					"builder": "@angular-devkit/build-angular:application",
+					"options": {
+						"outputPath": "dist/shell",
+						"index": "projects/shell/src/index.html",
+						"polyfills": [
+							"zone.js",
+							"es-module-shims"
+						],
+						"tsConfig": "projects/shell/tsconfig.app.json",
+						"assets": [
+							"projects/shell/src/favicon.ico",
+							"projects/shell/src/assets"
+						],
+						"styles": [
+							"projects/shell/src/styles.css"
+						],
+						"scripts": [],
+						"browser": "projects/shell/src/main.ts"
+					},
+					"configurations": {
+						"production": {
+							"budgets": [
+								{
+									"type": "initial",
+									"maximumWarning": "500kb",
+									"maximumError": "1mb"
+								},
+								{
+									"type": "anyComponentStyle",
+									"maximumWarning": "2kb",
+									"maximumError": "4kb"
+								}
+							],
+							"fileReplacements": [
+								{
+									"replace": "projects/shell/src/environments/environment.ts",
+									"with": "projects/shell/src/environments/environment.prod.ts"
+								}
+							],
+							"outputHashing": "all"
+						},
+						"development": {
+							"optimization": false,
+							"extractLicenses": false,
+							"sourceMap": true,
+							"namedChunks": true
+						}
+					},
+					"defaultConfiguration": "production"
+				},
+				"serve-original": {
+					"builder": "@angular-devkit/build-angular:dev-server",
+					"configurations": {
+						"production": {
+							"buildTarget": "shell:esbuild:production"
+						},
+						"development": {
+							"buildTarget": "shell:esbuild:development"
+						}
+					},
+					"defaultConfiguration": "development",
+					"options": {
+						"publicHost": "http://localhost:4200",
+						"port": 4200
 					}
 				}
 			}
@@ -174,7 +193,10 @@
 					"options": {
 						"outputPath": "dist/mfe1",
 						"index": "projects/mfe1/src/index.html",
-						"polyfills": "projects/mfe1/src/polyfills.ts",
+						"polyfills": [
+							"zone.js",
+							"es-module-shims"
+						],
 						"tsConfig": "projects/mfe1/tsconfig.app.json",
 						"assets": [
 							"projects/mfe1/src/favicon.ico",
@@ -230,7 +252,7 @@
 					"defaultConfiguration": "development",
 					"options": {
 						"publicHost": "http://localhost:4201",
-						"port": 4200
+						"port": 4201
 					}
 				}
 			}
