@@ -1,4 +1,5 @@
-{  	"$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+{
+	"$schema": "./node_modules/@angular/cli/lib/config/schema.json",
 	"version": 1,
 	"newProjectRoot": "projects",
 	"projects": {
@@ -122,70 +123,26 @@
 			"prefix": "app",
 			"architect": {
 				"build": {
-					"builder": "@angular-devkit/build-angular:browser",
-					"options": {
-						"outputPath": "dist/mfe1",
-						"index": "projects/mfe1/src/index.html",
-						"main": "projects/mfe1/src/main.ts",
-						"polyfills": "projects/mfe1/src/polyfills.ts",
-						"tsConfig": "projects/mfe1/tsconfig.app.json",
-						"assets": [
-							"projects/mfe1/src/favicon.ico",
-							"projects/mfe1/src/assets"
-						],
-						"styles": [
-							"projects/mfe1/src/styles.css"
-						],
-						"scripts": [],
-						"commonChunk": false
-					},
+					"builder": "@angular-architects/native-federation:build",
+					"options": {},
 					"configurations": {
 						"production": {
-							"budgets": [
-								{
-									"type": "initial",
-									"maximumWarning": "500kb",
-									"maximumError": "1mb"
-								},
-								{
-									"type": "anyComponentStyle",
-									"maximumWarning": "2kb",
-									"maximumError": "4kb"
-								}
-							],
-							"fileReplacements": [
-								{
-									"replace": "projects/mfe1/src/environments/environment.ts",
-									"with": "projects/mfe1/src/environments/environment.prod.ts"
-								}
-							],
-							"outputHashing": "all"
+							"target": "mfe1:esbuild:production"
 						},
 						"development": {
-							"buildOptimizer": false,
-							"optimization": false,
-							"vendorChunk": true,
-							"extractLicenses": false,
-							"sourceMap": true,
-							"namedChunks": true
+							"target": "mfe1:esbuild:development",
+							"dev": true
 						}
 					},
 					"defaultConfiguration": "production"
 				},
 				"serve": {
-					"builder": "@angular-devkit/build-angular:dev-server",
-					"configurations": {
-						"production": {
-							"buildTarget": "mfe1:build:production"
-						},
-						"development": {
-							"buildTarget": "mfe1:build:development"
-						}
-					},
-					"defaultConfiguration": "development",
+					"builder": "@angular-architects/native-federation:build",
 					"options": {
-						"publicHost": "http://localhost:4201",
-						"port": 4201
+						"target": "mfe1:serve-original:development",
+						"rebuildDelay": 0,
+						"dev": true,
+						"port": 0
 					}
 				},
 				"extract-i18n": {
@@ -210,6 +167,70 @@
 							"projects/mfe1/src/styles.css"
 						],
 						"scripts": []
+					}
+				},
+				"esbuild": {
+					"builder": "@angular-devkit/build-angular:application",
+					"options": {
+						"outputPath": "dist/mfe1",
+						"index": "projects/mfe1/src/index.html",
+						"polyfills": "projects/mfe1/src/polyfills.ts",
+						"tsConfig": "projects/mfe1/tsconfig.app.json",
+						"assets": [
+							"projects/mfe1/src/favicon.ico",
+							"projects/mfe1/src/assets"
+						],
+						"styles": [
+							"projects/mfe1/src/styles.css"
+						],
+						"scripts": [],
+						"browser": "projects/mfe1/src/main.ts"
+					},
+					"configurations": {
+						"production": {
+							"budgets": [
+								{
+									"type": "initial",
+									"maximumWarning": "500kb",
+									"maximumError": "1mb"
+								},
+								{
+									"type": "anyComponentStyle",
+									"maximumWarning": "2kb",
+									"maximumError": "4kb"
+								}
+							],
+							"fileReplacements": [
+								{
+									"replace": "projects/mfe1/src/environments/environment.ts",
+									"with": "projects/mfe1/src/environments/environment.prod.ts"
+								}
+							],
+							"outputHashing": "all"
+						},
+						"development": {
+							"optimization": false,
+							"extractLicenses": false,
+							"sourceMap": true,
+							"namedChunks": true
+						}
+					},
+					"defaultConfiguration": "production"
+				},
+				"serve-original": {
+					"builder": "@angular-devkit/build-angular:dev-server",
+					"configurations": {
+						"production": {
+							"buildTarget": "mfe1:esbuild:production"
+						},
+						"development": {
+							"buildTarget": "mfe1:esbuild:development"
+						}
+					},
+					"defaultConfiguration": "development",
+					"options": {
+						"publicHost": "http://localhost:4201",
+						"port": 4200
 					}
 				}
 			}

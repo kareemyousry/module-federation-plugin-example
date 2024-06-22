@@ -14,12 +14,14 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "run:all": "node node_modules/@angular-architects/module-federation/src/server/mf-dev-server.js"
+    "run:all": "node node_modules/@angular-architects/module-federation/src/server/mf-dev-server.js",
+    "postinstall": "node node_modules/@angular-architects/native-federation/src/patch-angular-build.js"
   },
   "private": true,
   "dependencies": {
     "@angular-architects/module-federation": "^18.0.2",
     "@angular-architects/module-federation-tools": "^18.0.2",
+    "@angular-architects/native-federation": "^18.0.2",
     "@angular/animations": "^18.0.4",
     "@angular/common": "^18.0.4",
     "@angular/compiler": "^18.0.4",
@@ -28,6 +30,7 @@
     "@angular/platform-browser": "^18.0.4",
     "@angular/platform-browser-dynamic": "^18.0.4",
     "@angular/router": "^18.0.4",
+    "es-module-shims": "^1.5.12",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.14.0"
@@ -56,8 +59,5 @@
     "tslint": "~6.1.0",
     "typescript": "~5.4.5",
     "word-wrap": "^1.2.3"
-  },
-  "overrides": {
-    "piscina": "4.5.1"
   }
 }
